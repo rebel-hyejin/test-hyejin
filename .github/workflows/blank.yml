@@ -1,0 +1,30 @@
+name: "check_scheduler"
+
+on:
+  schedule:
+    - cron: '32 4 * * 1-5'  # 23:20 KST
+  workflow_dispatch:
+    inputs:
+      branch:
+        type: string
+        default: test-branch
+        description: "Branch to update submodules to"
+  workflow_call:
+    inputs:
+      branch:
+        type: string
+        default: test-branch
+        description: "Branch to update submodules to"
+    outputs:
+      changed: 
+        value: ${{ jobs.update-submodules.outputs.changed}}
+
+jobs:
+  update-submodules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo ssw-atom with submodules
+        run: |
+          echo inputs ${{inputs.branch}}
+          echo schedule ${{inputs.branch}}
