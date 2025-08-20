@@ -2,7 +2,7 @@ name: "check_scheduler"
 
 on:
   schedule:
-    - cron: '39 4 * * 1-5'  # 23:20 KST
+    - cron: '46 4 * * 1-5'  # 23:20 KST
   workflow_dispatch:
     inputs:
       branch:
