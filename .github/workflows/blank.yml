@@ -5,11 +5,6 @@ on:
     - cron: '55 4 * * 1-5'  # 23:20 KST
   workflow_dispatch:
   workflow_call:
-    inputs:
-      branch:
-        type: string
-        default: test-branch
-        description: "Branch to update submodules to"
     outputs:
       changed: 
         value: ${{ jobs.update-submodules.outputs.changed}}
@@ -17,10 +12,8 @@ on:
 jobs:
   update-submodules:
     runs-on: ubuntu-latest
-    env:
-      TARGET_BRANCH: ${{ (github.event_name == 'workflow_dispatch' && github.ref_name) || (github.event_name == 'workflow_call' && inputs.branch) || 'dev' }}
     steps:
       - name: Checkout Repo ssw-atom with submodules
         run: |
-          echo inputs ${{env.TARGET_BRANCH}}
-          echo schedule ${{env.TARGET_BRANCH}}
+          echo inputs ${{github.ref_name}}
+          echo schedule ${{github.ref_name}}
